@@ -1,8 +1,14 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Route, Redirect, useLocation } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
-
+import { AuthProvider } from './api/authentication/useAuth';
+import { useAuth } from './api/authentication/useAuth';
+/* Pages */
+import Landing from './pages/Landing';
+import { SignIn } from './components/SignIn';
+import { SignUp } from './components/SignUp';
+/* Tailwind styles */
+import './theme/tailwind.css';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -18,23 +24,44 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
-
-/* Theme variables */
-import './theme/variables.css';
-
 setupIonicReact();
 
+function RequireAuth({ children }: { children: JSX.Element }) {
+  const { user } = useAuth();
+  const location = useLocation();
+
+  if (!user) {
+    // Redirect them to the /signin page, but save the current location they were
+    // trying to go to when they were redirected. This allows us to send them
+    // along to that page after they signin, which is a nicer user experience
+    // than dropping them off on the home page.
+    return <Redirect to="/" from={location.pathname} />;
+  }
+
+  return children;
+}
+
 const App: React.FC = () => (
-  <IonApp>
+  <IonApp className='font-inter text-white bg-brand'>
     <IonReactRouter>
+      <AuthProvider>
       <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
+      <RequireAuth>
+        <Route path="/xd">
+          <h1>123</h1>
         </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
+      </RequireAuth>
+      <Route exact path="/sign-in">
+          <SignIn />
         </Route>
+      <Route exact path="/sign-up">
+        <SignUp />
+      </Route>
+      <Route exact path="/">
+        <Landing />
+      </Route>
       </IonRouterOutlet>
+      </AuthProvider>
     </IonReactRouter>
   </IonApp>
 );
