@@ -1,10 +1,10 @@
 {
-  "name": "StreamRoom",
+  "name": "StreamValley",
   "version": "0.0.1",
   "private": true,
   "engines": {
-    "node": "16.17.0",
-    "npm": "8.19.1"
+    "node": "16.15.0",
+    "npm": "8.5.5"
   },
   "dependencies": {
     "@capacitor/app": "4.0.1",
