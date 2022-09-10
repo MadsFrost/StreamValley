@@ -7,6 +7,11 @@ import { useAuth } from './api/authentication/useAuth';
 import Landing from './pages/Landing';
 import { SignIn } from './components/SignIn';
 import { SignUp } from './components/SignUp';
+
+import { Provider } from 'react-redux';
+import { store } from './Store';
+
+import Player from './Services/Player';
 /* Tailwind styles */
 import './theme/tailwind.css';
 /* Core CSS required for Ionic components to work properly */
@@ -42,27 +47,30 @@ function RequireAuth({ children }: { children: JSX.Element }) {
 }
 
 const App: React.FC = () => (
-  <IonApp className='font-inter text-white bg-brand'>
-    <IonReactRouter>
-      <AuthProvider>
-      <IonRouterOutlet>
-      <RequireAuth>
-        <Route path="/xd">
-          <h1>123</h1>
+  <IonApp className='font-inter text-white bg-app'>
+    <Provider store={store}>
+      <Player />
+      <IonReactRouter>
+        <AuthProvider>
+        <IonRouterOutlet>
+        <RequireAuth>
+          <Route path="/xd">
+            <h1>123</h1>
+          </Route>
+        </RequireAuth>
+        <Route exact path="/sign-in">
+            <SignIn />
+          </Route>
+        <Route exact path="/sign-up">
+          <SignUp />
         </Route>
-      </RequireAuth>
-      <Route exact path="/sign-in">
-          <SignIn />
+        <Route exact path="/">
+          <Landing />
         </Route>
-      <Route exact path="/sign-up">
-        <SignUp />
-      </Route>
-      <Route exact path="/">
-        <Landing />
-      </Route>
-      </IonRouterOutlet>
-      </AuthProvider>
-    </IonReactRouter>
+        </IonRouterOutlet>
+        </AuthProvider>
+      </IonReactRouter>
+    </Provider>
   </IonApp>
 );
 

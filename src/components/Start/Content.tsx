@@ -13,13 +13,13 @@ export const Content = () => {
               <span 
                 onClick={() => setAuthType('login')}
                 className={`transition transition-all mr-2 text-lg 
-              font-bold w-full ${authType === 'login' ? 'opacity-100' : 'opacity-50'}`}>
+              font-bold w-full cursor-pointer ${authType === 'login' ? 'opacity-100' : 'opacity-50'}`}>
               Login
               </span>
               <span
                 onClick={() => setAuthType('signup')} 
                 className={`transition transition-all text-lg 
-              font-bold w-full ${authType === 'signup' ? 'opacity-100' : 'opacity-50'}`}>
+              font-bold w-full cursor-pointer ${authType === 'signup' ? 'opacity-100' : 'opacity-50'}`}>
                 Signup
               </span>
             </div>

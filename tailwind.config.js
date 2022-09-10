@@ -7,10 +7,20 @@ module.exports = {
       fontFamily: {
         'inter': ['Inter', 'sans-serif']
       },
+      colors: {
+        app: '#191A2D',
+        'app-secondary': '#323352',
+        'app-tertiary': '#464371'
+      },
+      boxShadow: {
+        custom: '0px 7px 8px -2px rgba(0,0,0,0.44)'
+      },
       backgroundImage: {
         'brand': 'linear-gradient(to top, #cc208e 0%, #6713d2 100%)',
         'brand-2': 'linear-gradient(-225deg, #FF3CAC 0%, #562B7C 52%, #2B86C5 100%)',
-        'start': "url('https://www.qiez.de/app/uploads/2018/03/mensch-in-einem-dunklen-club-mit-lasern-alexander-popov-365743.jpeg')"
+        'start': "url('../assets/frank.jpg')",
+        'play': 'linear-gradient(to top right, #786BE9 0%, #A55BF1 100%)',
+        'home': 'linear-gradient(to bottom left, #333453 0%, #1C1D31 100%)'
       }
     },
   },

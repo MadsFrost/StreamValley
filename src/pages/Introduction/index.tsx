@@ -11,8 +11,8 @@ const Introduction: React.FC = () => {
                 <div className='flex flex-row w-full justify-center items-center pt-4'>
                     <button 
                     onClick={() => history.push('/sign-in')}
-                    className='bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-2 px-4 rounded mr-4'>Login</button>
-                    <button className='bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-2 px-4 rounded'>Create an account</button>
+                    className='bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-2 px-4 rounded mr-4 cursor-pointer'>Login</button>
+                    <button className='bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-2 px-4 rounded cursor-pointer'>Create an account</button>
                 </div>
 
             </div>
