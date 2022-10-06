@@ -31,12 +31,12 @@ const initialState: PlayerState = {
   initialLoad: true,
   playing: false,
   isSpotify: false,
-  isSoundcloud: true,
-  isYouTube: false,
+  isSoundcloud: false,
+  isYouTube: true,
   track: {
-    cover: 'https://i.scdn.co/image/ab67616d0000b2734011de7822423ed7557c3c81',
-    name: 'LANY - ILSYB',
-    uri: 'https://soundcloud.com/thisislany/ilysb',
+    cover: 'https://i.ytimg.com/vi/ZZ5LpwO-An4/hqdefault.jpg?sqp=-oaymwEcCOADEI4CSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDZdEfMvGSSAGoGTZee97r1I1eLJA',
+    name: 'HEYYEYAAEYAAAEYAEYAA',
+    uri: 'https://www.youtube.com/watch?v=ZZ5LpwO-An4',
     progress: { loaded: 0, loadedSeconds: 0, played: 0, playedSeconds: 0  },
     duration: 0,
     seek: undefined
@@ -116,6 +116,7 @@ export const playerSlice = createSlice({
     goNext: (state) => {
       if (state.queue.length >= 1) {
         state.playing = false;
+        state.initialLoad = false;
         const oldTrack: Track = state.track;
         const nextTrack: Track = state.queue[0]
         state.oldQueue = [oldTrack, ...state.oldQueue];
@@ -134,6 +135,7 @@ export const playerSlice = createSlice({
     goBack: (state) => {
       if (state.oldQueue.length >= 1) {
         state.playing = false;
+        state.initialLoad = false;
         const oldTrack = state.track
         const nextTrack = state.oldQueue[0]
         state.isSoundcloud = verifySoundCloud(nextTrack.uri)
