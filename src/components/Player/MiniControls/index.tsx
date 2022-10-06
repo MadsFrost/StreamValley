@@ -35,8 +35,8 @@ const MiniControls = () => {
                 <SwipeableViews animateTransitions ignoreNativeScroll resistance enableMouseEvents>
                     <div className='border-t-2 border-gray-800 flex flex-row h-full items-center'>
                         <img className='object-cover' id="mini-image" src={cover} width='75px' height='75px'/>
-                        <div className='bg-app w-[75px] opacity-30 h-[75px] z-5 absolute left-15 bottom-1 text-2xl shadow-lg transition-all cursor-pointer'></div>
-                        <div className='text-white w-[75px] h-[50px] z-10 absolute left-7 bottom-0 text-2xl shadow-lg transition-all cursor-pointer' onClick={togglePlaying}>{playing ? <Pause/> : <Play />}</div>
+                        <div onClick={togglePlaying} className='bg-app w-[75px] opacity-30 h-[75px] z-5 absolute left-15 bottom-1 text-2xl shadow-lg transition-all cursor-pointer'></div>
+                        <div onClick={togglePlaying} className='text-white w-[75px] h-[50px] z-10 absolute left-7 bottom-0 text-2xl shadow-lg transition-all cursor-pointer'>{playing ? <Pause/> : <Play />}</div>
                             <div className='p-3 flex flex-col w-full cursor-pointer hover:bg-gray-800' onClick={toggleModal}>
                                 <span className='font-medium text-sm'>{name}</span>
                                 <span className='text-sm flex flex-row items-center'>Playing from 

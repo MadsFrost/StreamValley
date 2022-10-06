@@ -43,6 +43,19 @@ const initialState: PlayerState = {
   },
   queue: [
     {
+      "cover": "https://i1.sndcdn.com/artworks-000066860300-35qggp-t500x500.jpg",
+        "duration": 0,
+        "name": "Ellie Goulding - Lights",
+        "progress": {
+            "loaded": 0,
+            "loadedSeconds": 0,
+            "played": 0,
+            "playedSeconds": 0
+        },
+        "seek": undefined,
+        "uri": "https://soundcloud.com/kiraly_gergo/ellie-goulding-lights-ground"
+    },
+    {
       "cover": "https://i.ytimg.com/vi/OlXY0AJBtio/hqdefault.jpg",
       "duration": 0,
       "name": "Kim Larsen - Papirsklip",
@@ -67,19 +80,6 @@ const initialState: PlayerState = {
       },
       "seek": undefined,
       "uri": "https://www.youtube.com/watch?v=_jb4q38HyGI"
-  },
-  {
-    "cover": "https://i1.sndcdn.com/artworks-000066860300-35qggp-t500x500.jpg",
-      "duration": 0,
-      "name": "Ellie Goulding - Lights",
-      "progress": {
-          "loaded": 0,
-          "loadedSeconds": 0,
-          "played": 0,
-          "playedSeconds": 0
-      },
-      "seek": undefined,
-      "uri": "https://soundcloud.com/kiraly_gergo/ellie-goulding-lights-ground"
   }
   ],
   oldQueue: [],
@@ -91,6 +91,7 @@ export const playerSlice = createSlice({
   initialState,
   reducers: {
     setPlaying: (state, action: PayloadAction<boolean>) => {
+      state.initialLoad = false;
       state.playing = action.payload
     },
     setTrack: (state, action: PayloadAction<Track>) => {
@@ -98,7 +99,6 @@ export const playerSlice = createSlice({
         state.isYouTube = verifyYouTube(action.payload.uri);
         state.isSoundcloud = verifySoundCloud(action.payload.uri)
         //state.isSpotify = verifySpotify(action.payload.uri)
-        state.initialLoad = false;
         state.track = action.payload;
     },
     setVolume: (state, action: PayloadAction<number>) => {
@@ -115,8 +115,6 @@ export const playerSlice = createSlice({
     },
     goNext: (state) => {
       if (state.queue.length >= 1) {
-        state.playing = false;
-        state.initialLoad = false;
         const oldTrack: Track = state.track;
         const nextTrack: Track = state.queue[0]
         state.oldQueue = [oldTrack, ...state.oldQueue];
@@ -126,6 +124,7 @@ export const playerSlice = createSlice({
         state.isSoundcloud = verifySoundCloud(nextTrack.uri)
         state.isYouTube = verifyYouTube(nextTrack.uri);
         state.isSpotify = verifySpotify(nextTrack.uri)
+        state.initialLoad = false;
         state.track = nextTrack;
       }
     },
@@ -134,13 +133,12 @@ export const playerSlice = createSlice({
     },
     goBack: (state) => {
       if (state.oldQueue.length >= 1) {
-        state.playing = false;
-        state.initialLoad = false;
         const oldTrack = state.track
         const nextTrack = state.oldQueue[0]
         state.isSoundcloud = verifySoundCloud(nextTrack.uri)
         state.isYouTube = verifyYouTube(nextTrack.uri);
-        state.isSpotify = verifySpotify(nextTrack.uri)
+        state.isSpotify = verifySpotify(nextTrack.uri);
+        state.initialLoad = false;
         state.track = nextTrack;
         state.oldQueue = state.oldQueue.filter((track) => 
           track.uri !== nextTrack.uri
