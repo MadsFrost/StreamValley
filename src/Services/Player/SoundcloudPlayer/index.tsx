@@ -4,7 +4,7 @@ import { ProgressProps } from '../index';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../Store';
 import { useDispatch } from 'react-redux';
-import { setSeek, setPlaying } from '../../../state/player';
+import { setSeek, setPlaying, goNext } from '../../../state/player';
 
 interface SoundcloudPlayerProps {
     progress: (state: ProgressProps) => void;
@@ -26,12 +26,17 @@ const SoundcloudPlayer: React.FC<SoundcloudPlayerProps> = (props) => {
 
     const onReady = () => {
         if (!initialLoad) {
-            dispatch(setPlaying(!playing))
+            dispatch(setPlaying(true))
         }
+    }
+
+    const onEnd = () => {
+        dispatch(goNext())
     }
     return (
         <SoundCloudPlayer
             onReady={onReady}
+            onEnded={onEnd}
             ref={SCPlayerRef} 
             onDuration={duration}
             onProgress={progress}
