@@ -26,6 +26,8 @@ const YoutubePlayer: React.FC<YoutubePlayerProps> = (props) => {
 
     return (
         <YTPlayer
+            onReady={() => dispatch(setPlaying(!playing))}
+            playsinline
             ref={YTPlayerRef} 
             onDuration={duration}
             onProgress={progress}

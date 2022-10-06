@@ -26,6 +26,7 @@ const SoundcloudPlayer: React.FC<SoundcloudPlayerProps> = (props) => {
 
     return (
         <SoundCloudPlayer
+            onReady={() => dispatch(setPlaying(!playing))}
             ref={SCPlayerRef} 
             onDuration={duration}
             onProgress={progress}
