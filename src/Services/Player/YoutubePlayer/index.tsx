@@ -15,6 +15,7 @@ const YoutubePlayer: React.FC<YoutubePlayerProps> = (props) => {
     const { progress, duration } = props;
     const YTPlayerRef = React.useRef<any>(null);
     const { initialLoad, track, playing } = useSelector((state: RootState) => state.player);
+    const [ready, setReady] = React.useState<boolean>(false);
     const { seek, uri } = track;
     const dispatch = useDispatch();
     React.useEffect(() => {
@@ -26,9 +27,10 @@ const YoutubePlayer: React.FC<YoutubePlayerProps> = (props) => {
 
     const onReady = () => {
         if (!initialLoad) {
-            dispatch(setPlaying(true))
+            dispatch(setPlaying(true));
         }
     }
+
 
     const onEnd = () => {
         dispatch(goNext())
