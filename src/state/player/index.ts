@@ -16,6 +16,7 @@ export interface Track {
     seek: number | undefined;
 }
 export interface PlayerState {
+  initialLoad: boolean;
   playing: boolean;
   track: Track;
   queue: Track[];
@@ -27,6 +28,7 @@ export interface PlayerState {
 }
 
 const initialState: PlayerState = {
+  initialLoad: true,
   playing: false,
   isSpotify: false,
   isSoundcloud: true,
@@ -96,6 +98,7 @@ export const playerSlice = createSlice({
         state.isYouTube = verifyYouTube(action.payload.uri);
         state.isSoundcloud = verifySoundCloud(action.payload.uri)
         //state.isSpotify = verifySpotify(action.payload.uri)
+        state.initialLoad = false;
         state.track = action.payload;
     },
     setVolume: (state, action: PayloadAction<number>) => {
