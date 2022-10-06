@@ -1,14 +1,13 @@
 import React from 'react';
 import PlayButton from './PlayButton';
-import Control from './Control';
-const Controls = () => {
+import Wrapper from './ControlWrapper';
 
+const Controls: React.FC = () => {
     return (
-        <div className='px-8 py-8 h-[80px] w-full fixed bottom-0 shadow flex justify-center items-center transition-all shadow-xl'
-        >
-            <Control>
+        <div className='flex flex-col items-end justify-end'>
+            <Wrapper>
                 <PlayButton />
-            </Control>
+            </Wrapper>
         </div>
     )
 }

@@ -1,7 +1,0 @@
-{
-  "name": "StreamRoom",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}

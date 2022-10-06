@@ -29,11 +29,11 @@ const initialState: PlayerState = {
   playing: false,
   isSpotify: false,
   isSoundcloud: true,
-  isYouTube: true,
+  isYouTube: false,
   track: {
     cover: 'https://i.pinimg.com/originals/0e/fb/13/0efb13304e6c69a383736aaad990cd5d.png',
     name: 'Modern Romantics',
-    uri: 'https://soundcloud.com/kidgorgeousbeats/sets/frank-ocean-look-at-us-were-in-love',
+    uri: 'https://soundcloud.com/thisislany/ilysb',
     progress: { loaded: 0, loadedSeconds: 0, played: 0, playedSeconds: 0  },
     duration: 0,
     seek: undefined
@@ -50,10 +50,11 @@ export const playerSlice = createSlice({
       state.playing = action.payload
     },
     setTrack: (state, action: PayloadAction<Track>) => {
-        state.track = action.payload;
-        state.isSpotify = verifySpotify(action.payload.uri);
+        // SPOTIFY DISABLED -- state.isSpotify = verifySpotify(action.payload);
         state.isYouTube = verifyYouTube(action.payload.uri);
-        state.isSoundcloud = verifySoundCloud(action.payload.uri);
+        state.isSoundcloud = verifySoundCloud(action.payload.uri)
+        //state.isSpotify = verifySpotify(action.payload.uri)
+        state.track = action.payload;
     },
     setVolume: (state, action: PayloadAction<number>) => {
         state.volume = action.payload;

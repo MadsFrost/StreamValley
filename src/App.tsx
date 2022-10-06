@@ -5,12 +5,9 @@ import { AuthProvider } from './api/authentication/useAuth';
 import { useAuth } from './api/authentication/useAuth';
 /* Pages */
 import Landing from './pages/Landing';
-import { SignIn } from './components/SignIn';
-import { SignUp } from './components/SignUp';
-
+import Layout from './components/Layout';
 import { Provider } from 'react-redux';
 import { store } from './Store';
-
 import Player from './Services/Player';
 /* Tailwind styles */
 import './theme/tailwind.css';
@@ -29,22 +26,9 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
+import Test from './components/Test';
+import Home from './pages/Home/index';
 setupIonicReact();
-
-function RequireAuth({ children }: { children: JSX.Element }) {
-  const { user } = useAuth();
-  const location = useLocation();
-
-  if (!user) {
-    // Redirect them to the /signin page, but save the current location they were
-    // trying to go to when they were redirected. This allows us to send them
-    // along to that page after they signin, which is a nicer user experience
-    // than dropping them off on the home page.
-    return <Redirect to="/" from={location.pathname} />;
-  }
-
-  return children;
-}
 
 const App: React.FC = () => (
   <IonApp className='font-inter text-white bg-app'>
@@ -52,22 +36,28 @@ const App: React.FC = () => (
       <Player />
       <IonReactRouter>
         <AuthProvider>
-        <IonRouterOutlet>
-        <RequireAuth>
-          <Route path="/xd">
-            <h1>123</h1>
-          </Route>
-        </RequireAuth>
-        <Route exact path="/sign-in">
-            <SignIn />
-          </Route>
-        <Route exact path="/sign-up">
-          <SignUp />
-        </Route>
-        <Route exact path="/">
-          <Landing />
-        </Route>
-        </IonRouterOutlet>
+            <IonRouterOutlet>
+              <Layout>
+                <Route exact path="/">
+                  <Home />
+                </Route>
+                <Route path="/youtube">
+                  <div className='bg-youtube-secondary w-full h-full'>YouTube</div>
+                </Route>
+                <Route path="/soundcloud">
+                  <div className='bg-soundcloud-secondary w-full h-full'>SoundCloud</div>
+                </Route>
+                <Route path="/spotify">
+                  <div className='bg-spotify-secondary w-full h-full'>Spotify</div>
+                </Route>
+                <Route path="/settings">
+                  <div className='bg-gray-900 w-full h-full'>Settings</div>
+                </Route>
+                <Route path="/test">
+                  <Test />
+                </Route>
+              </Layout>
+            </IonRouterOutlet>
         </AuthProvider>
       </IonReactRouter>
     </Provider>

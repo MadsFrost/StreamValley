@@ -1,0 +1,29 @@
+.modal-animate-open {
+    animation-name: goUp;
+    animation-duration: 0.25s;
+}
+
+.modal-animate-close {
+    animation-name: goDown;
+    animation-duration: 0.25s;
+}
+
+@keyframes goUp {
+    from {
+        transform: translateY(100%)
+    }
+
+    to {
+        transform: translateY(0)
+    }
+}
+
+@keyframes goDown {
+    from {
+        transform: translateY(0)
+    }
+
+    to {
+        transform: translateY(100%)
+    }
+}

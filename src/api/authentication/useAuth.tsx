@@ -7,49 +7,25 @@ import {
     useState,
   } from "react";
   import { useLocation, useHistory } from "react-router-dom";
-  // import * as sessionsApi from "./api/sessions";
-  // import * as usersApi from "./api/users";
-  import { Redirect } from "react-router-dom";
-
+  import { getTokenFromUrl } from "../../utils/getTokenFromUrl";
+  import { loginUrl } from './spotify';
+  import SpotifyWebApi from 'spotify-web-api-js';
   interface User {}
-  
-  type SignInArgs = {
-    email: string;
-    password: string;
-  };
-  
-  type SignUpArgs = {
-    name: string;
-  } & SignInArgs;
-  
+
   type AuthContextType = {
     // We defined the user type in `index.d.ts`, but it's
     // a simple object with email, name and password.
     user?: User;
-    loading: boolean;
     error?: any;
-    signIn: (args: SignInArgs) => void;
-    signUp: (args: SignUpArgs) => void;
-    signOut: () => void;
+    signInSpotify: () => void;
+    signOutSpotify: () => void;
   };
+  const LS_KEY = 'spotify-token'
   
   const AuthContext = createContext<AuthContextType>({} as AuthContextType);
-  
-  const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-  
-  const LS_KEY = "token";
-  
-  const MOCK_USER = {
-    email: "john@doe.com",
-    name: "John Doe",
-    birthdate: new Date(),
-    country: "DK",
-    id: 1,
-    gender: "none",
-    created_at: new Date(),
-  };
-  
   // Export the provider as we need to wrap the entire app with it
+  const spotify = new SpotifyWebApi();
+
   export function AuthProvider({
     children,
   }: {
@@ -57,40 +33,7 @@ import {
   }): JSX.Element {
     const [user, setUser] = useState<User>();
     const [error, setError] = useState<any>();
-    const [loading, setLoading] = useState<boolean>(false);
-    const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
-    // We are using `react-router` for this example,
-    // but feel free to omit this or use the
-    // router of your choice.
-    const location = useLocation();
     const history = useHistory();
-  
-    // If we change page, reset the error state.
-    useEffect(() => {
-      if (error) setError(null);
-    }, [location.pathname]);
-  
-    // Check if there is a currently active session
-    // when the provider is mounted for the first time.
-    //
-    // If there is an error, it means there is no session.
-    //
-    // Finally, just signal the component that the initial load
-    // is over.
-    useEffect(() => {
-      if (localStorage.getItem(LS_KEY) && !user) {
-        wait(1000)
-          .then(() => setUser(MOCK_USER))
-          .finally(() => setLoadingInitial(false));
-        return;
-      }
-  
-      setLoadingInitial(false);
-      // usersApi.getCurrentUser()
-      //   .then((user) => setUser(user))
-      //   .catch((_error) => {})
-      //   .finally();
-    }, []);
   
     // Flags the component loading state and posts the login
     // data to the server.
@@ -100,60 +43,12 @@ import {
     //
     // Finally, just signal the component that loading the
     // loading state is over.
-  
-    function signIn({ email, password }: SignInArgs) {
-      setLoading(true);
-      console.log("signIn", { email, password });
-      wait(1000)
-        .then(() =>
-          setUser(() => {
-            localStorage.setItem(LS_KEY, "very-long-token");
-            return { ...MOCK_USER, email };
-          })
-        )
-        .finally(() => {
-          setLoading(false);
-          history.push('/', { replace: true })
-        });
-  
-      // sessionsApi.login({ email, password })
-      //   .then((user) => {
-      //     setUser(user);
-      //     history.push("/");
-      //   })
-      //   .catch((error) => setError(error))
-      //   .finally(() => setLoading(false));
-    }
-  
-    // Sends sign up details to the server. On success we just apply
-    // the created user to the state.
-    function signUp({ email, name, password }: SignUpArgs) {
-      setLoading(true);
-      console.log("SingUp", { name, email, password });
-      wait(1000)
-        .then(() =>
-          setUser(() => {
-            localStorage.setItem(LS_KEY, "very-long-token");
-            return { ...MOCK_USER, email, name };
-          })
-        )
-        .finally(() => {
-          setLoading(false);
-          history.push("/", { replace: true });
-        });
-  
-      // usersApi.signUp({ email, name, password })
-      //   .then((user) => {
-      //     setUser(user);
-      //     history.push("/");
-      //   })
-      //   .catch((error) => setError(error))
-      //   .finally(() => setLoading(false));
-    }
-  
     // Call the logout endpoint and then remove the user
     // from the state.
-    function signOut() {
+    function signInSpotify() {
+      window.location.href = loginUrl;
+    }
+    function signOutSpotify() {
       setUser(() => {
         localStorage.removeItem(LS_KEY);
         return undefined;
@@ -171,16 +66,39 @@ import {
     // that can be very costly! Even in this case, where
     // you only get re-renders when logging in and out
     // we want to keep things very performant.
+    useEffect(() => {
+      if (localStorage.getItem(LS_KEY) !== null) {
+        spotify.setAccessToken(localStorage.getItem(LS_KEY));
+        spotify.getMe().then((user) => {
+          setUser(user);
+        })
+      }
+      if (window.location.href.includes('#access_token')) {
+        const _SPOTIFY_TOKEN = getTokenFromUrl().access_token;
+        window.location.hash = "";
+        if (_SPOTIFY_TOKEN) {
+          spotify.setAccessToken(_SPOTIFY_TOKEN);
+          spotify.getMe().then((user) => {
+            console.log(user);
+            setUser(user);
+          })
+          localStorage.setItem(LS_KEY, _SPOTIFY_TOKEN);
+        }
+      }
+    }, [])
+    const getUserFromToken = () => {
+      spotify.getMe().then((user) => {
+        setUser(user);
+      })
+    }
     const memoedValue = useMemo(
       () => ({
         user,
-        loading,
         error,
-        signIn,
-        signUp,
-        signOut,
+        signInSpotify,
+        signOutSpotify,
       }),
-      [user, loading, error]
+      [user, error]
     );
   
     // We only want to render the underlying app after we
@@ -188,7 +106,7 @@ import {
     return (
       <AuthContext.Provider value={memoedValue}>
         {/* {children} */}
-        {!loadingInitial && children}
+        {children}
       </AuthContext.Provider>
     );
   }

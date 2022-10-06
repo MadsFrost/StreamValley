@@ -1,9 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../Store';
-import Slider from '../Slider';
+import Slider from './Slider';
 import { formatHHMMSS } from '../../../../utils/formatNumber';
 
+interface SliderWrapperProps {
+    minimized?: boolean;
+}
 const SliderWrapper = () => {
     const { track, playing } = useSelector((state: RootState) => state.player);
     const { playedSeconds } = track.progress;
