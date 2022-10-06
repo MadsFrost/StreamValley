@@ -27,7 +27,6 @@ const Player = () => {
     return (
         <div className='flex flex-col hidden'>
             {isSoundcloud && <SCPlayer 
-                track={track.uri} 
                 isPlaying={playing} 
                 progress={progress}
                 duration={duration}
@@ -38,9 +37,9 @@ const Player = () => {
                 progress={progress}  
             />}
            {isYouTube && <YoutubePlayer 
-                track={track.uri}
-                isPlaying={playing}
+                isPlaying={playing} 
                 progress={progress}
+                duration={duration}
             />}
         </div>
     )

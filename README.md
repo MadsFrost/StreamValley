@@ -20,3 +20,10 @@ StreamValley is meant to be a cross-platform music streaming app. With the same 
 - [ ] General UI
     - [ ] Create queue UI design and redux slice
     - [ ] Create search and api features
+
+
+## Docker / Run
+### Build Image
+``` docker build -t stream-valley-client:latest . ```
+## Run Image
+```docker run -it --rm -p 80:80 stream-valley-client:latest```

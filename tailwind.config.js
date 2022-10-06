@@ -3,6 +3,16 @@ module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx,css}', './public/index.html'],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    screens: {
+      'sm': {'max': '576px'},
+      // => @media (min-width: 576px) { ... }
+
+      'md': '960px',
+      // => @media (min-width: 960px) { ... }
+
+      'lg': '1440px',
+      // => @media (min-width: 1440px) { ... }
+    },
     extend: {
       fontFamily: {
         'inter': ['Inter', 'sans-serif']
@@ -10,7 +20,13 @@ module.exports = {
       colors: {
         app: '#191A2D',
         'app-secondary': '#323352',
-        'app-tertiary': '#464371'
+        'app-tertiary': '#464371',
+        youtube: '#FF0000',
+        'youtube-secondary': '#d41e11',
+        spotify: '#1DB954',
+        'spotify-secondary': '#129942',
+        soundcloud: '#F26F23',
+        'soundcloud-secondary': '#d15f1d'
       },
       boxShadow: {
         custom: '0px 7px 8px -2px rgba(0,0,0,0.44)'

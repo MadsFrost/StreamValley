@@ -1,14 +1,17 @@
 import React from 'react';
-
-const Logo = () => (
+interface LogoProps {
+  width?: number;
+  height?: number;
+}
+const Logo: React.FC<LogoProps> = ({ width = 100, height = 100 }) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       style={{
         maxHeight: "none",
         transition: "none 0s ease 0s",
       }}
-      width={45}
-      height={45}
+      width={width}
+      height={height}
       viewBox="0 0 840 840"
     >
       <path

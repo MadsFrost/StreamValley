@@ -10,7 +10,7 @@ export interface Profile {
 const initialState: Profile = {
     isNew: true,
     spotifyConnected: false,
-    disableSpotify: true
+    disableSpotify: false,
   }
 
 export const profileSlice = createSlice({
