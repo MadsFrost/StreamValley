@@ -13,7 +13,7 @@ interface SoundcloudPlayerProps {
 
 const SoundcloudPlayer: React.FC<SoundcloudPlayerProps> = (props) => {
     const { progress, duration } = props;
-    const { initialLoad, playing } = useSelector((state: RootState) => state.player);
+    const { playing, initialLoad } = useSelector((state: RootState) => state.player);
     const SCPlayerRef = React.useRef<any>(null);
     const { seek, uri } = useSelector((state: RootState) => state.player.track);
     const dispatch = useDispatch();
@@ -26,13 +26,14 @@ const SoundcloudPlayer: React.FC<SoundcloudPlayerProps> = (props) => {
 
     const onReady = () => {
         if (!initialLoad) {
-            dispatch(setPlaying(true))
+            dispatch(setPlaying(true));
         }
     }
 
     const onEnd = () => {
         dispatch(goNext())
     }
+
     return (
         <SoundCloudPlayer
             onReady={onReady}

@@ -115,6 +115,8 @@ export const playerSlice = createSlice({
     },
     goNext: (state) => {
       if (state.queue.length >= 1) {
+        state.playing = false;
+        state.initialLoad = false;
         const oldTrack: Track = state.track;
         const nextTrack: Track = state.queue[0]
         state.oldQueue = [oldTrack, ...state.oldQueue];
@@ -132,6 +134,8 @@ export const playerSlice = createSlice({
     },
     goBack: (state) => {
       if (state.oldQueue.length >= 1) {
+        state.playing = false;
+        state.initialLoad = false;
         const oldTrack = state.track;
         const nextTrack = state.oldQueue[0];
         state.isSoundcloud = verifySoundCloud(nextTrack.uri)
