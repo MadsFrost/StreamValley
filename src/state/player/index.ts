@@ -124,7 +124,6 @@ export const playerSlice = createSlice({
         state.isSoundcloud = verifySoundCloud(nextTrack.uri)
         state.isYouTube = verifyYouTube(nextTrack.uri);
         state.isSpotify = verifySpotify(nextTrack.uri)
-        state.initialLoad = false;
         state.track = nextTrack;
       }
     },
@@ -133,12 +132,11 @@ export const playerSlice = createSlice({
     },
     goBack: (state) => {
       if (state.oldQueue.length >= 1) {
-        const oldTrack = state.track
-        const nextTrack = state.oldQueue[0]
+        const oldTrack = state.track;
+        const nextTrack = state.oldQueue[0];
         state.isSoundcloud = verifySoundCloud(nextTrack.uri)
         state.isYouTube = verifyYouTube(nextTrack.uri);
         state.isSpotify = verifySpotify(nextTrack.uri);
-        state.initialLoad = false;
         state.track = nextTrack;
         state.oldQueue = state.oldQueue.filter((track) => 
           track.uri !== nextTrack.uri
