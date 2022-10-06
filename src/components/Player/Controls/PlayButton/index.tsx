@@ -8,12 +8,17 @@ import '../animations.css';
 
 const PlayButton: React.FC = () => {
     const { playing } = useSelector((state: RootState) => state.player);
+    const [isPlaying, setIsPlaying] = React.useState(playing);
     const toggleAnimation = `${playing ? 'inner_circle' : 'inner_circle_paused'} flex bg-app justify-center items-center`;
     const dispatch = useDispatch();
 
     const togglePlaying = () => {
         dispatch(setPlaying(!playing));
     }
+
+    React.useEffect(() => {
+        setIsPlaying(playing);
+    }, [playing])
     return (
         <div className="outer_circle transition transition-all">
             <div className={toggleAnimation}
@@ -27,7 +32,7 @@ const PlayButton: React.FC = () => {
                     borderRadius: '1000px'
                 }}
             >
-                {playing ? 
+                {isPlaying ? 
                 <Pause 
                     fontSize='30px'
                 /> : 
