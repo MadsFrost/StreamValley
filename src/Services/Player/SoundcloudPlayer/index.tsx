@@ -7,13 +7,13 @@ import { useDispatch } from 'react-redux';
 import { setSeek, setPlaying } from '../../../state/player';
 
 interface SoundcloudPlayerProps {
-    isPlaying?: boolean;
     progress: (state: ProgressProps) => void;
     duration: (state: number) => void;
 }
 
 const SoundcloudPlayer: React.FC<SoundcloudPlayerProps> = (props) => {
-    const { isPlaying, progress, duration } = props;
+    const { progress, duration } = props;
+    const { playing } = useSelector((state: RootState) => state.player);
     const SCPlayerRef = React.useRef<any>(null);
     const { seek, uri } = useSelector((state: RootState) => state.player.track);
     const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const SoundcloudPlayer: React.FC<SoundcloudPlayerProps> = (props) => {
             ref={SCPlayerRef} 
             onDuration={duration}
             onProgress={progress}
-            playing={isPlaying}
+            playing={playing}
             url={uri}
         />
     )

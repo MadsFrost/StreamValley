@@ -12,6 +12,7 @@ const Test = () => {
     const setTrackTest = async (uri: string) => {
         trackMetaData(uri).then((res) => {
             if (res !== undefined) {
+                console.log(res);
                 dispatch(setTrack(res))
             }
         })

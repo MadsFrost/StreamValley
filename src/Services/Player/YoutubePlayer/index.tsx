@@ -6,15 +6,16 @@ import { RootState } from '../../../Store';
 import { useDispatch } from 'react-redux';
 import { setSeek, setPlaying } from '../../../state/player';
 interface YoutubePlayerProps {
-    isPlaying?: boolean;
+
     progress: (state: ProgressProps) => void;
     duration: (state: number) => void;
 }
 
 const YoutubePlayer: React.FC<YoutubePlayerProps> = (props) => {
-    const { isPlaying, progress, duration } = props;
+    const { progress, duration } = props;
     const YTPlayerRef = React.useRef<any>(null);
-    const { seek, uri } = useSelector((state: RootState) => state.player.track);
+    const { track, playing } = useSelector((state: RootState) => state.player);
+    const { seek, uri } = track;
     const dispatch = useDispatch();
     React.useEffect(() => {
         if (seek !== undefined) {
@@ -28,7 +29,7 @@ const YoutubePlayer: React.FC<YoutubePlayerProps> = (props) => {
             ref={YTPlayerRef} 
             onDuration={duration}
             onProgress={progress}
-            playing={isPlaying}
+            playing={playing}
             url={uri}
         />
     )
