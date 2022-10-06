@@ -23,7 +23,7 @@ const Slider: React.FC<SliderProps> = (props) => {
     }, [playedSeconds])
     return (
         <ReactSlider
-            className='w-full flex justify-center items-center'
+            className='w-full flex justify-center items-center cursor-pointer'
             trackClassName='slider t-8 h-[8px] bg-purple-900 opacity-50 rounded-full'
             markClassName='rounded-full h-8 w-8 bg-purple-300'
             thumbClassName='rounded-full bg-purple-600 shadow-3xl w-4 h-4'

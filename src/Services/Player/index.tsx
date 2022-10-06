@@ -15,7 +15,7 @@ export interface ProgressProps {
     loadedSeconds: number;
 }
 const Player = () => {
-    const { isSoundcloud, isSpotify, isYouTube, track, playing} = useSelector((state: RootState) => state.player);
+    const { isSoundcloud, isSpotify, isYouTube, track } = useSelector((state: RootState) => state.player);
     const dispatch = useDispatch();
     const progress = (progress: ProgressProps) => {
         dispatch(setProgress(progress));
@@ -24,20 +24,18 @@ const Player = () => {
     const duration = (duration: number) => {
         dispatch(setDuration(duration));
     }
+    
     return (
         <div className='flex flex-col hidden'>
             {isSoundcloud && <SCPlayer 
-                isPlaying={playing} 
                 progress={progress}
                 duration={duration}
             />}
             {isSpotify && <SpotifyPlayer 
                 track={track.uri}
-                isPlaying={playing}  
                 progress={progress}  
             />}
            {isYouTube && <YoutubePlayer 
-                isPlaying={playing} 
                 progress={progress}
                 duration={duration}
             />}

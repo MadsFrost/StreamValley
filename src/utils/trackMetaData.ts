@@ -1,5 +1,6 @@
 import { verifyYouTube, verifySoundCloud, verifySpotify } from "./verifyLinks";
 import { Track } from "../state/player";
+
 const trackMetaData = async (uri: string): Promise<Track | undefined> => {
     if (verifyYouTube(uri)) {
         const ytTrack = await fetch(`http://www.youtube.com/oembed?url=${uri}&format=json`).then((res) => {
