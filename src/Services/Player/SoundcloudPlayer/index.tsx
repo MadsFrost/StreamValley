@@ -36,6 +36,7 @@ const SoundcloudPlayer: React.FC<SoundcloudPlayerProps> = (props) => {
 
     return (
         <SoundCloudPlayer
+            playsinline
             onReady={onReady}
             onEnded={onEnd}
             ref={SCPlayerRef} 
