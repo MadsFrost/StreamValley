@@ -3,6 +3,7 @@ import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { AuthProvider } from './api/authentication/useAuth';
 import { useAuth } from './api/authentication/useAuth';
+import Search from './pages/Search';
 /* Pages */
 import Landing from './pages/Landing';
 import Layout from './components/Layout';
@@ -56,6 +57,9 @@ const App: React.FC = () => (
                 </Route>
                 <Route path="/test">
                   <Test />
+                </Route>
+                <Route path="/search">
+                  <Search />
                 </Route>
               </Layout>
             </IonRouterOutlet>

@@ -2,7 +2,7 @@ import React from 'react'
 import { BsYoutube, BsSpotify } from 'react-icons/bs'
 import { ImSoundcloud } from 'react-icons/im';
 import { AiFillSetting } from 'react-icons/ai';
-import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarRightCollapse, TbPlayerTrackNext } from 'react-icons/tb';
+import { TbSearch } from 'react-icons/tb';
 import Logo from '../Logo';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../Store';
@@ -40,6 +40,7 @@ const Drawer = () => {
 					{collapsed ? <Logo width={30} height={30} /> : <Logo width={40} height={40} />}
 				</a>
 			</NavLink>
+			
 
 			<ul className={classnames(
 				['w-full'],
@@ -50,6 +51,25 @@ const Drawer = () => {
 					['bg-spotify-secondary']: player.isSpotify
 				}
 			)}>
+				<li className={classnames(
+								['w-full py-2'],
+								{
+									['hover:bg-gray-800']: !player.isSoundcloud && !player.isYouTube && !player.isSpotify,
+									['hover:bg-soundcloud']: player.isSoundcloud,
+									['hover:bg-youtube']: player.isYouTube,
+									['hover:bg-spotify']: player.isSpotify
+								}
+							)}>
+					<NavLink
+						onClick={collapse}
+						to='/search'
+						className="p-2 h-16 flex flex-col justify-center items-center w-full
+						focus:text-orange-500">
+						<TbSearch className={'text-white w-8 h-8'}/>
+						{!collapsed && <span className='text-white font-semibold text-sm'>YouTube</span>}
+					</NavLink>
+				</li>
+
 				<li className={classnames(
 								['w-full py-2'],
 								{
