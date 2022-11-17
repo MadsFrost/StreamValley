@@ -3,15 +3,18 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../Store';
 import { BsYoutube, BsSpotify } from 'react-icons/bs'
 import { ImSoundcloud } from 'react-icons/im';
-
-const MiddleContent = () => {
+import ModalControl from '../ModalControl';
+const Content = () => {
   const { track, isSoundcloud, isSpotify, isYouTube } = useSelector((state: RootState) => state.player);
   const { cover, name } = track;
 
   return (
-      <div className='flex flex-col px-2 py-8 ml-2 justify-center items-center'>
-          <img className='w-[500px] h-[360px] object-cover' src={cover} />
-          <div className='pt-4 flex flex-col justify-center items-center text-center'>
+      <div className='w-full h-full flex flex-col justify-center items-center'>
+          <div className='w-screen h-screen fixed z-1 bg-black'>
+            <img className='relative z-0 w-full h-full object-cover opacity-40' src={cover} />
+          </div>
+          <div className='relative z-2 pt-4 flex flex-col justify-center items-center text-center'>
+            <img className='rounded-sm w-[400px] h-[400px] sm:h-[300px] sm:w-[300px] md:w-[600px] md:h-[600px] lg:w-[700px] lg:h-[700px] m-4 object-cover' src={cover} />
             <span className='pt-4 text-white font-bold text-xl'>{name}</span>
             <span className='text-white font-medium text-md flex flex-row items-center'>Playing from 
             {isSoundcloud && <ImSoundcloud className='text-soundcloud text-2xl ml-3' />}
@@ -19,8 +22,11 @@ const MiddleContent = () => {
             {isSpotify && <BsSpotify className='text-spotify text-2xl ml-3' />}
             </span>
           </div>
+          <div className='w-full z-20 flex justify-center items-center pt-6'>
+            <ModalControl />
+          </div>
       </div>
   )
 }
 
-export default MiddleContent
+export default Content;

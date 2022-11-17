@@ -38,9 +38,9 @@ const YoutubePlayer: React.FC<YoutubePlayerProps> = (props) => {
 
     return (
         <YTPlayer
+            playsinline
             onEnded={onEnd}
             onReady={onReady}
-            playsinline
             ref={YTPlayerRef} 
             onDuration={duration}
             onProgress={progress}

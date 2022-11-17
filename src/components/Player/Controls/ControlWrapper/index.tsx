@@ -17,13 +17,13 @@ const ControlWrapper: React.FC<ControlProps> = (props) => {
     const controlStyleBack = classnames('mx-6 text-3xl shadow-3xl',
         {
             ['text-white']: oldQueue?.length >= 1,
-            ['text-app-tertiary']: oldQueue.length === 0 
+            ['text-gray-500']: oldQueue.length === 0 
         }
     )
     const controlStyleNext = classnames('mx-6 text-3xl shadow-3xl',
         {
             ['text-white']: queue?.length >= 1,
-            ['text-app-tertiary']: queue.length === 0 
+            ['text-gray-500']: queue.length === 0 
         }
     )
     const dispatch = useDispatch();

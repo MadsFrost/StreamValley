@@ -148,23 +148,6 @@ const Drawer = () => {
 				</li>
 
 			</ul>
-
-			<div className="h-16 flex flex-col items-center w-full" onClick={() => setCollapsed(!collapsed)}>
-				<button
-					className={
-						classnames(['h-16 mx-auto flex justify-center items-center w-full focus:text-orange-500 focus:outline-none'],
-						{
-							['hover:bg-gray-800']: !player.isSoundcloud && !player.isYouTube && !player.isSpotify,
-							['hover:bg-soundcloud-secondary']: player.isSoundcloud,
-							['hover:bg-youtube-secondary']: player.isYouTube,
-							['hover:bg-spotify-secondary']: player.isSpotify
-						}
-  					)}>
-					{!collapsed && <TbLayoutSidebarLeftCollapse className='w-8 h-8' />}
-					{collapsed && <TbLayoutSidebarRightCollapse className='w-8 h-8' />}
-
-				</button>
-			</div>
 		</aside>
 	</div>
   )

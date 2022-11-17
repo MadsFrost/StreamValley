@@ -1,5 +1,6 @@
 import React from 'react'
-import Controls from '../../Controls'
+import Controls from '../../Controls';
+
 const BottomController = () => {
   return (
     <Controls />
