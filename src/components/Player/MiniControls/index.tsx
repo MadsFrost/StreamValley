@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import Slider from '../../Player/Controls/SliderWrapper/Slider';
 import SwipeableViews from 'react-swipeable-views';
 import { verifySoundCloud, verifyYouTube, verifySpotify } from '../../../utils/verifyLinks';
+import { formatHHMMSS } from '../../../utils/formatNumber';
 const MiniControls = () => {
   const [isOpen, setOpen] = React.useState(false);
   const { queue, playing, isSoundcloud, isSpotify, isYouTube, track } = useSelector((state: RootState) => state.player);
@@ -27,33 +28,37 @@ const MiniControls = () => {
   return (
             <div className='h-[80px] w-full'>
                 <ControlModal open={isOpen} onClose={toggleModal}/>
-                <Slider 
-                    isPlaying={playing}
-                    playedSeconds={progress.playedSeconds}
-                    duration={duration}
-                />
+
+                    <Slider 
+                        isPlaying={playing}
+                        playedSeconds={progress.playedSeconds}
+                        duration={duration}
+                    />
                 <SwipeableViews animateTransitions ignoreNativeScroll resistance enableMouseEvents>
-                    <div className='border-t-2 border-gray-800 flex flex-row h-full items-center'>
-                        <img className='object-cover' id="mini-image" src={cover} width='75px' height='75px'/>
-                        <div onClick={togglePlaying} className='bg-app w-[75px] opacity-30 h-[75px] z-5 absolute left-15 bottom-1 text-2xl shadow-lg transition-all cursor-pointer'></div>
+                    <div className={`border-t-2 border-gray-800 flex flex-row h-full items-center`}>
+                        <img className='overflow-hidden absolute w-full h-[75px] z-0 opacity-20 object-cover object-center' src={track.cover} />
+                        <img className='object-cover h-[80px] w-[80px]' id="mini-image" src={cover} />
+                        <div onClick={togglePlaying} className='w-[75px] h-[75px] z-5 absolute left-15 bottom-1 text-2xl shadow-lg transition-all cursor-pointer'></div>
                         <div onClick={togglePlaying} className='text-white w-[75px] h-[50px] z-10 absolute left-7 bottom-0 text-2xl shadow-lg transition-all cursor-pointer'>{playing ? <Pause/> : <Play />}</div>
-                            <div className='p-3 flex flex-col w-full cursor-pointer hover:bg-gray-800' onClick={toggleModal}>
-                                <span className='font-medium text-sm'>{name}</span>
-                                <span className='text-sm flex flex-row items-center'>Playing from 
-                                    {isYouTube && <BsYoutube className='ml-2 text-xl text-youtube' />}
-                                    {isSoundcloud && <ImSoundcloud className='ml-2 text-xl text-soundcloud' />}
-                                    {isSpotify && <BsSpotify className='ml-2 text-xl text-spotify' />}
-                                </span>
+                        <div className='overflow-hidden p-3 flex flex-col w-full relative z-1 cursor-pointer hover:bg-gray-800' onClick={toggleModal}>
+                            <span className='font-medium text-sm'>{name}</span>
+                            <span className='text-sm flex flex-row items-center'>Playing from 
+                                {isYouTube && <BsYoutube className='ml-2 text-xl text-youtube' />}
+                                {isSoundcloud && <ImSoundcloud className='ml-2 text-xl text-soundcloud' />}
+                                {isSpotify && <BsSpotify className='ml-2 text-xl text-spotify' />}
+                            </span>
+                            <span className='text-sm'>{formatHHMMSS(track.progress.playedSeconds)}-{formatHHMMSS(track.duration)}</span>
                         </div>
                     </div>
                     {queue.map((track) => ( 
                             <div className='border-t-2 border-gray-800 flex flex-row h-full items-center'>
-                                 <img className='object-cover' id="mini-image" src={track.cover} width='75px' height='75px'/>
-                                 <div className='bg-app w-[75px] opacity-30 h-[75px] z-0 absolute left-15 bottom-2 text-2xl shadow-lg transition-all cursor-pointer'></div>
+                                 <img className='overflow-hidden absolute w-full h-full z-0 opacity-20 object-cover object-center' src={track.cover} />
+                                 <img className='object-cover h-[80px] w-[80px]' id="mini-image" src={track.cover} />
+                                 <div className='w-[75px] h-[75px] z-0 absolute left-15 bottom-2 text-2xl shadow-lg transition-all cursor-pointer'></div>
                                  <div className='text-white w-[75px] h-[50px] z-100 absolute left-7 bottom-1 text-2xl shadow-lg transition-all cursor-pointer'></div>
-                                     <div className='p-3 flex flex-col w-full cursor-pointer hover:bg-gray-800'>
+                                 <div className='overflow-hidden p-3 flex flex-col w-full relative z-1 cursor-pointer hover:bg-gray-800' onClick={toggleModal}>
                                          <span className='font-medium text-sm'>{track.name}</span>
-                                         <span className='text-sm flex flex-row items-center'>Playing from 
+                                         <span className='text-sm flex flex-row items-center'>Song from:
                                              {verifyYouTube(track.uri) && <BsYoutube className='ml-2 text-xl text-youtube' />}
                                              {verifySoundCloud(track.uri) && <ImSoundcloud className='ml-2 text-xl text-soundcloud' />}
                                              {verifySpotify(track.uri) && <BsSpotify className='ml-2 text-xl text-spotify' />}

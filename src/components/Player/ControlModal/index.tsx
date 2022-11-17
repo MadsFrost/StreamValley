@@ -1,9 +1,7 @@
 import React from 'react'
 import Modal from 'react-modal';
 import TopContent from './TopContent';
-import MiddleContent from './MiddleContent';
-import BottomController from './BottomController';
-
+import Content from './Content';
 import './animate.css';
 
 interface ControlModalProps {
@@ -31,18 +29,18 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 const ControlModal: React.FC<ControlModalProps> = ({ open, onClose }) => {
-    const [className, setClassName] = React.useState<string>('overflow-none w-full h-full bg-gray-900 py-6 px-4');
+    const [className, setClassName] = React.useState<string>('overflow-none w-full h-full bg-gray-900');
 
     const handleAfterOpen = () => {
-        setClassName('modal-animate-open w-full h-full bg-gray-900 py-6 px-4')
+        setClassName('modal-animate-open w-full h-full bg-gray-900')
     }
     const handleRequestClose = () => {
-        setClassName('modal-animate-close w-full h-full bg-gray-900 py-6 px-4')
+        setClassName('modal-animate-close w-full h-full bg-gray-900')
         onClose();
     }
 
     const handleAfterClose = () => {
-        setClassName('overflow-none w-full h-full bg-gray-900 py-6 px-4')
+        setClassName('overflow-none w-full h-full bg-gray-900')
     }
   
     return (
@@ -56,9 +54,8 @@ const ControlModal: React.FC<ControlModalProps> = ({ open, onClose }) => {
         contentLabel="Example Modal"
       >
         <div className={className}>
-            <TopContent open={open} onClose={handleRequestClose} />
-            <MiddleContent />
-            <BottomController />
+            <TopContent onClose={handleRequestClose}  open={open} />
+            <Content />
         </div>
       </Modal>
     )

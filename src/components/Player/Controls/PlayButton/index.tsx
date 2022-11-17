@@ -24,10 +24,10 @@ const PlayButton: React.FC = () => {
             <div className={toggleAnimation}
                 onClick={togglePlaying}
                 style={{ 
-                    width: '50px',
-                    height: '50px',
+                    width: '80px',
+                    height: '80px',
                     position: 'relative',
-                    top: '5px',
+                    top: '4px',
                     left: '5px',
                     borderRadius: '1000px'
                 }}
