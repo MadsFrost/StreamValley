@@ -4,7 +4,7 @@
 .outer_circle {
     background-image: linear-gradient(to left, #743ad5, #d53a9d);
     width: 90px;
-    height: 90px;
+    height: 90gpx;
     border-radius: 50%;
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }

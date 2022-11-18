@@ -5,14 +5,16 @@ import { RootState } from '../../../Store';
 import { BsYoutube, BsSpotify } from 'react-icons/bs'
 import { ImSoundcloud } from 'react-icons/im';
 import { FiPlay as Play, FiPause as Pause } from 'react-icons/fi';
-import { setPlaying } from '../../../state/player';
+import { goBack, goNext, setPlaying, setTrack } from '../../../state/player';
 import { useDispatch } from 'react-redux';
 import Slider from '../../Player/Controls/SliderWrapper/Slider';
-import SwipeableViews from 'react-swipeable-views';
+import SwipeableViews, { OnChangeIndexCallback } from 'react-swipeable-views';
 import { verifySoundCloud, verifyYouTube, verifySpotify } from '../../../utils/verifyLinks';
 import { formatHHMMSS } from '../../../utils/formatNumber';
+
 const MiniControls = () => {
   const [isOpen, setOpen] = React.useState(false);
+  const [songIndex, setSongIndex] = React.useState<number>(0);
   const { queue, playing, isSoundcloud, isSpotify, isYouTube, track } = useSelector((state: RootState) => state.player);
   const { cover, name, duration, progress } = track;
   const dispatch = useDispatch();
@@ -24,9 +26,17 @@ const MiniControls = () => {
   const toggleModal = () => {
     setOpen(!isOpen)
   }
+  
+  const onChangeIndex = (index: number) => {
+    if (index > songIndex) {
+        dispatch(goNext())
+    } else {
+        dispatch(goBack());
+    }
+  }
 
   return (
-            <div className='h-[80px] w-full'>
+            <div className='fixed bg-black bottom-0 h-[80px] w-full'>
                 <ControlModal open={isOpen} onClose={toggleModal}/>
 
                 <div className='relative z-30'>
@@ -36,7 +46,7 @@ const MiniControls = () => {
                         duration={duration}
                     />
                 </div>
-                <SwipeableViews animateTransitions ignoreNativeScroll resistance enableMouseEvents>
+                <SwipeableViews index={songIndex} animateTransitions ignoreNativeScroll resistance enableMouseEvents onChangeIndex={onChangeIndex}>
                     <div className={`border-gray-800 flex flex-row h-full items-center`}>
                         <img className='overflow-hidden absolute w-full h-[75px] z-0 opacity-20 object-cover object-center' src={cover} />
                         <img className='mt-1 object-cover h-[80px] w-[80px] relative z-10' id="mini-image" src={cover} />

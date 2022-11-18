@@ -35,6 +35,8 @@ module.exports = {
         'brand': 'linear-gradient(to top, #cc208e 0%, #6713d2 100%)',
         'brand-2': 'linear-gradient(-225deg, #FF3CAC 0%, #562B7C 52%, #2B86C5 100%)',
         'start': "url('../assets/frank.jpg')",
+        'switch-1': "url('../assets/control.jpg')",
+        'switch-2': "url('../assets/techno.jpg')",
         'play': 'linear-gradient(to top right, #786BE9 0%, #A55BF1 100%)',
         'home': 'linear-gradient(to bottom left, #333453 0%, #1C1D31 100%)'
       }
