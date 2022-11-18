@@ -11,7 +11,6 @@ const Search = () => {
     const [loading, setLoading] = React.useState<boolean>();
     const handleSearchQuery = async (query: string) => {
         setQuery(query);
-        console.log(results);
     }
 
     React.useEffect(() => {
