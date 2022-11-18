@@ -14,7 +14,7 @@ const Content = () => {
             <img className='relative z-0 w-full h-full object-cover opacity-30' src={cover} />
           </div>
           <div className='relative z-2 pt-4 flex flex-col justify-center items-center text-center'>
-            <img className='rounded-sm w-[400px] h-[400px] sm:h-[300px] sm:w-[300px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] m-4 object-cover' src={cover} />
+            <img className='rounded-sm w-[400px] h-[400px] sm:h-[300px] sm:w-[300px] md:w-[400px] md:h-[400px] lg:w-[450px] lg:h-[450px] m-4 object-cover' src={cover} />
             <span className='pt-4 text-white font-bold text-xl'>{name}</span>
             <span className='text-white font-medium text-md flex flex-row items-center'>Playing from 
             {isSoundcloud && <ImSoundcloud className='text-soundcloud text-2xl ml-3' />}

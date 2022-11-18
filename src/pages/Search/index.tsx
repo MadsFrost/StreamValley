@@ -1,29 +1,51 @@
-import React from 'react'
-
+import React from 'react';
+import SearchInput from './SearchInput';
+import SearchHeader from './SearchHeader';
+import SearchResult from './SearchResult';
+import SearchGrid from './SearchGrid';
+import axios from 'axios';
+import { YouTubeResult } from '../../utils/YouTubeType';
 const Search = () => {
-
-    const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const form = e.currentTarget
-        const inputs = form.elements as typeof form.elements & {
-            search: HTMLInputElement
-        }
-        alert(inputs.search.value);
+    const [query, setQuery] = React.useState('');
+    const [results, setResults] = React.useState<YouTubeResult | undefined>();
+    const [loading, setLoading] = React.useState<boolean>();
+    const handleSearchQuery = async (query: string) => {
+        setQuery(query);
+        console.log(results);
     }
-  return (
-    <div className="flex w-full bg-gray-900 p-3">
-        <form className='w-full' onSubmit={handleSearch}>
-            <div className="relative text-gray-600 focus-within:text-gray-400">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-                <button type="submit" className="p-1 focus:outline-none focus:shadow-outline">
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" className="w-6 h-6"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </button>
-            </span>
-            <input id="search" type="search" name="q" className="text-xl w-full py-4 text-white bg-gray-800 rounded-md pl-12 focus:outline-none focus:bg-gray-900 focus:text-white" placeholder="Search..." autoComplete="off" />
-            </div>
-        </form>
-    </div>
-  )
+
+    React.useEffect(() => {
+        setLoading(true);
+        axios.request({
+            method: 'GET',
+            url: 'https://youtube-v31.p.rapidapi.com/search',
+            params: {
+            q: query,
+            part: 'snippet,id',
+            regionCode: 'US',
+            maxResults: '25'
+            },
+            headers: {
+            'X-RapidAPI-Key': process.env.REACT_APP_YOUTUBE_KEY || '',
+            'X-RapidAPI-Host': process.env.REACT_APP_YOUTUBE_HOST || ''
+            }
+        })
+        .then((res: any) => {
+            setResults(res.data);
+        })
+        setLoading(false);
+    }, [query])
+    
+    return (
+        <div className="overflow-y-scroll flex w-full flex-col bg-gray-900">
+            <SearchHeader>
+                <SearchInput callback={handleSearchQuery} />
+            </SearchHeader>
+            {!loading && <SearchGrid>
+                {results?.items?.map((result) => <SearchResult YouTube={result} />)}
+            </SearchGrid>}
+        </div>
+    )
 }
 
 export default Search
