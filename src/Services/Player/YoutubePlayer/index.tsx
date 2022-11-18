@@ -46,7 +46,6 @@ const YoutubePlayer: React.FC<YoutubePlayerProps> = (props) => {
             onProgress={progress}
             playing={playing}
             url={uri}
-            onError={(e) => alert(e)}
         />
     )
 }
