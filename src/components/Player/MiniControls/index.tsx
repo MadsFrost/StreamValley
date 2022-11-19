@@ -53,7 +53,7 @@ const MiniControls = () => {
                         <div onClick={togglePlaying} className='w-[75px] h-[75px] z-5 absolute left-15 bottom-1 text-2xl shadow-lg transition-all cursor-pointer'></div>
                         <div onClick={togglePlaying} className='text-white w-[75px] h-[50px] z-10 absolute left-7 bottom-0 text-2xl shadow-lg transition-all cursor-pointer'>{playing ? <Pause/> : <Play />}</div>
                         <div className='overflow-hidden p-3 flex flex-col w-full relative z-1 cursor-pointer' onClick={toggleModal}>
-                            <span className='font-medium text-sm'>{name}</span>
+                            <span className='font-medium text-sm whitespace-nowrap overflow-hidden overflow-clip'>{name}</span>
                             <span className='text-sm flex flex-row items-center'>Playing from 
                                 {isYouTube && <BsYoutube className='ml-2 text-xl text-youtube' />}
                                 {isSoundcloud && <ImSoundcloud className='ml-2 text-xl text-soundcloud' />}

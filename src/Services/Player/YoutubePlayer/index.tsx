@@ -6,7 +6,6 @@ import { RootState } from '../../../Store';
 import { useDispatch } from 'react-redux';
 import { setSeek, setPlaying, goNext } from '../../../state/player';
 interface YoutubePlayerProps {
-
     progress: (state: ProgressProps) => void;
     duration: (state: number) => void;
 }

@@ -9,7 +9,7 @@ import { ItemsEntity as YouTubeResult } from '../../utils/YouTubeType';
 import { Track } from '../../state/player';
 import { generateTrack } from '../../utils/generateTrack';
 import { MdQueue } from 'react-icons/md';
-
+import { RiPlayListAddFill } from 'react-icons/ri';
 export interface SearchResultProps {
     YouTube?: YouTubeResult;
     SoundCloud?: any;
@@ -65,19 +65,26 @@ const SearchResult: React.FC<SearchResultProps> = (props) => {
                     </div>
                 </div>
                 <div className='w-full flex items-center justify-end -mt-10 pr-8'>
-                    <div className='mx-4 bg-gray-900 rounded-full p-3' onClick={() => handleAddToQueue(generateTrack(
+                    <div className='mx-2 bg-gray-900 rounded-full p-3' onClick={() => handleAddToQueue(generateTrack(
                         `http://www.youtube.com/watch?v=${YouTube.id.videoId}`,
                         YouTube.snippet.thumbnails.high.url,
                         YouTube.snippet.title
                     ))}>
                         <div className='bg-gray-800 p-3 rounded-full'>
-                            {queued ? <AiFillCheckCircle className='text-green-500 text-3xl cursor-pointer'/> : <MdQueue className='text-3xl cursor-pointer' />}
+                            {queued ? <AiFillCheckCircle className='text-green-500 text-xl cursor-pointer'/> : <MdQueue className='text-purple-400 text-xl cursor-pointer' />}
                         </div>
                     </div>
-                    <div className='mx-4 bg-gray-900 rounded-full p-3'>
+                    <div className='mx-2 bg-gray-900 rounded-full p-3'>
                         <div className='bg-gray-800 p-3 rounded-full'>
                             <a  href={`http://www.youtube.com/watch?v=${YouTube.id.videoId}`}>
-                                <BsYoutube className='text-3xl text-red-600 cursor-pointer' />
+                                <RiPlayListAddFill className='text-purple-400 text-xl cursor-pointer' />
+                            </a>
+                        </div>
+                    </div>
+                    <div className='mx-2 bg-gray-900 rounded-full p-3'>
+                        <div className='bg-gray-800 p-3 rounded-full'>
+                            <a  href={`http://www.youtube.com/watch?v=${YouTube.id.videoId}`}>
+                                <BsYoutube className='text-xl text-red-600 cursor-pointer' />
                             </a>
                         </div>
                     </div>
